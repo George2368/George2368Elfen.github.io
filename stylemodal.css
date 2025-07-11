@@ -1,37 +1,28 @@
 body{
     overflow-x: hidden;
     margin: 0px;
+}
+html, body{
 
 }
+body:has(dialog[open]) {
+  overflow: hidden;
+}
 .product_modal_container{
-    width: 94vw;
-    height: 94vh;
+    width: 100vw;
+    height:100vh;
     background-color: #AE97E8;
-    padding: 60px;
+    padding: 26px;
     color: #FFFFFF;
     z-index: 20;
     border: 0px;
-    margin: 0px;
-
+    box-sizing: border-box;
 }
 
-.product_modal_container_in{
-    display: grid;
-    grid-template-columns: 0.5fr 1fr 0.5fr;
-    grid-template-rows: 0.2fr 0.5fr 0.2fr 1.5fr 1fr;
-    grid-template-areas: 
-        ". . modalclose" 
-        "artarea . modallike" 
-        "colormodal . heightmodal" 
-        "titledecorationmodal titledecorationmodal titledecorationmodal" 
-        "descmodal namepricemodal orderinmodal";
-    height: 100%;
-    width: 100%;
-    justify-items: center;
-    align-items: center;
-}
+
 .product_modal_in_close{
     grid-area: modalclose;
+    color: #DAD1F2;
 }
 .art_area, .color_modal_in_area, .modal_in_description_area{
     justify-self: left;
@@ -65,6 +56,12 @@ body{
     display: flex;
    text-transform: uppercase;
    letter-spacing: 2px;
+   align-items: center;
+   line-height: 45px;
+}
+.suntActive{
+
+  background-image: url(/assets/sunstgreen.svg);
 }
 .height_modal_in_area{
     grid-area: heightmodal;
@@ -82,20 +79,45 @@ body{
     grid-area: descmodal;
     font-size: 1.11111111rem;
 }
+
 .name_price_container_modal_in{
-    grid-area: namepricemodal;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.name_price_container_modal_in h2{
     font-size: 5.5555555rem;
-    line-height: 5.5555555rem;
     height: 3.555555rem;
     margin: 0px;
-    margin-bottom: 1.22222222rem;
+    margin-bottom: 1.4rem;
     font-family: "Floreste";
+    grid-area: namepricemodal;
+}
+.end_price_shop_insad{
+  display: flex;
+  align-items: flex-start;
+}
+.rubl{
+  font-family: "Euclid Circular A";
+  font-size: 1.25rem;
+  margin-left: 7px;
+  line-height: 1rem;
+}
+.cards_product_container_setting_container_left{
+  width: 7.444444rem;
+  display: flex;
+  justify-content: space-between;
+}
+.makeOrderPage .dialog_composition_backdrop_cover_in .ringed_order_button_in_title{
+  font-family: 'floreste';
+  text-transform: uppercase;
+  font-size: 2.22222222222222rem;
+  letter-spacing: 1.7px;
+}
+.order_container_in_total_price{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-transform: uppercase;
+}
+.end_price_shop{
+  font-size: 2.222222222222rem;
+  font-family: 'Floreste';
 }
 .ringed_order_button_inmodal{
     grid-area: orderinmodal;
@@ -112,9 +134,10 @@ body{
     margin-right: 0.8rem;
 }
 .modal_lamp_photo{
-    width: 362px;
-    height: 709px;
     top: 37%;
+    width: 50%;
+    height: 65%;
+    object-fit: contain;
 }
 .favorite_card{
     display: flex;
@@ -126,10 +149,22 @@ height: 100%;
 border: none;
 background-color: #AE97E8;
 z-index: 100;
-padding-top: 138px;
+padding-top: 33px;
 color: #FFFFFF;
 margin: 0px;
+overflow-x: hidden;
 
+}
+.search_result{
+  margin-top: 118px;
+}
+.saerch_container{
+  margin-top: 48px;
+}
+.search_section::backdrop{
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #AE97E8;
 }
 .makeOrderPage{
 width: 100%;
@@ -137,13 +172,31 @@ height: 100%;
 border: none;
 background-color: #AE97E8;
 z-index: 100;
-padding-top: 138px;
+
 color: #FFFFFF;
 margin: 0px;
 padding-left: 3.33333333333rem;
 padding-right: 3.33333333333rem;
 box-sizing: border-box;
 }
+.makeOrderPage_Inner_Container_left{
+  width: 45.95vw;
+}
+.makeOrderPage .order_container_in_total_price{
+  justify-content: center;
+}
+.makeOrderPage .end_price_shop{
+  display: none;
+}
+
+.makeOrderPage header{
+  padding-left: 0px!important;
+}
+.makeOrderPage::backdrop{
+  overflow-x: hidden;
+  background-color: #AE97E8;
+}
+
 
 .wshowchane{
   display: none;
@@ -200,6 +253,7 @@ box-sizing: border-box;
   justify-content: space-between;
   row-gap: 60px;
   flex-wrap: wrap;
+  margin-top: 40px;
 }
 
 .makeOrderPage_Inner_Container_right{
@@ -207,8 +261,6 @@ box-sizing: border-box;
   background-color: rgba(51, 32, 101, 0.18);
   border-radius: 30px;
   border: none;
-  margin-left: auto;
-  margin-right: 60px;
   width: 32.2339vw;
   height: 86%;
   top:5rem;
@@ -217,11 +269,16 @@ box-sizing: border-box;
   padding: 0px;
 }
 
-
-#registrationF, #loginF{
-  overflow: hidden;
+.RegIn, .logIn{
+  color: #FFFFFF;
+  font-size: 1.5rem;
 }
-
+#registrationF, #loginF{
+  overflow: visible;
+}
+#loginF{
+  height: 100%;
+}
 
 
 
@@ -246,9 +303,7 @@ box-sizing: border-box;
     margin: 0px;
     border: none;
   }
-  .favor_shoping_cart_card_total_price{
-    grid-area: ftotalprice;
-  }
+  
   .card_cart_img{
     max-height: 7.88888888888rem;
   }
@@ -268,14 +323,7 @@ box-sizing: border-box;
   .fshoping_cart_card_total_price, .fshoping_cart_card_change_count{
     align-self:flex-end;
   }
-  .favor_cart_card_right{
-    display: grid;
-    grid-template-columns: 1fr 1fr ;
-    grid-template-rows: 1fr 0.1fr 0.65fr ;
-    grid-template-areas: "fcartname ftrashcan" "fshophr fshophr" "ftotalprice .";
-    justify-content:left;
-    width: 75%;
-  }
+ 
   .dialog_composition_cover_favor{
     padding-bottom: 0px;
     height: 95%;
@@ -293,9 +341,9 @@ box-sizing: border-box;
     align-content: stretch;
     flex-direction: column;
   }
-  #profilepage{
+  /* #profilepage{
     height: 50%;
-  }
+  } */
   .autor_form input:not(:last-child){
     border: none;
     border-bottom: 2px solid #D9FF5A;
@@ -312,13 +360,16 @@ box-sizing: border-box;
     font-weight: 200;
     letter-spacing: 2px;
   }
-  .autor_form_button{
-    width: 6.6666666rem;
-    height: 4.5rem;
-  }
-  .ringed_order_button_in_autor{
+
+  .autor_form_button_log .ringed_order_button_in_autor{
     transform: rotate(344deg);
     
+  }
+  .autor_form_button_reg .ringed_order_button_in_autor{
+    transform: rotate(354deg);
+  }
+  .ringed_order_button_in_fomvcallback{
+    transform: rotate(353deg);
   }
   .autor_form{
     height: 70%;
@@ -331,7 +382,13 @@ box-sizing: border-box;
   border-radius: 30px;
   border: 0px;
   background-color: transparent;
+  overflow-x: hidden;
 }
+.map_dialog::backdrop {
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px);
+}
+
 .map_dialog_in{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -344,6 +401,11 @@ box-sizing: border-box;
 }
 .information_map_block>*{
   margin: 0px;
+}
+.information_map_block{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .dialog_left_up{
   color: #FFFFFF;
@@ -358,7 +420,7 @@ box-sizing: border-box;
 }
 .information_map_block_tel{
   font-size: 2.22222222rem;
-  font-family: "floreste";
+  font-family: "Floreste";
   margin-top: 0.8333333rem;
 }
 
@@ -367,7 +429,7 @@ box-sizing: border-box;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 0.4fr 1fr 1fr;
   box-sizing: border-box;
-  height: 75.5%;
+  height: 81.5%;
   width: 100%;
   margin: 0px;
 }
@@ -377,15 +439,24 @@ box-sizing: border-box;
 .map_buttons_in a{
   margin-right: 1rem;
 }
+.map_buttons_in a img{
+  width: 9.795%;
+}
 .dialog_right_up{
   grid-area: RightMap;
   background-color: #FA8FEF;
   padding-top: 4.6111111rem;
   padding-right: 4.6111111rem;
   box-sizing: border-box;
+  position: relative;
+}
+.close_dialog_form_callback{
+  position: absolute;
+  right: 2rem;
+  top:2rem;
 }
 .information_map_block_p{
-  margin-top: 2.611111rem!important;
+  margin-top: 2.611111rem;
 }
 .dialog_down{
   grid-area: DownMap;
@@ -400,17 +471,33 @@ box-sizing: border-box;
   margin-right: 1rem;
 }
 .titleHeadMap{
-
+font-size: 0.833333rem;
+text-transform: uppercase;
+color: rgba(255, 255, 255, 0.5);
 }
 .dialog_right_up_in{
 padding-left: 4.6111111rem;
 height: 100%;
 }
+.dialog_right_up_in .form_back_action{
+  margin-top: 3rem;
+}
+.class900Up{
+  display: block;
+}
+.class900{
+  display: none;
+  top: 200px;
+}
 .form_back_action{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 75%;  
+  height: 67%;  
+}
+.form_back_action input::placeholder{
+  text-transform: uppercase;
+  color: #FFFFFF;
 }
 .form_back_action input{
   border: none;
@@ -423,6 +510,14 @@ height: 100%;
 .makeOrderPage_Inner_Container{
   display: flex;
   justify-content: space-between;
+  margin-top: 5.722222222222rem;
+  align-items: center;
+}
+.makeOrderPage_Inner_Container .ringed_order_button_in_shop{
+  transform: rotate(346deg);
+}
+.form_back_action_makeoreder .one_ringed_order_button_shop .ringed_order_button_in_autor{
+  transform: rotate(352deg);
 }
 .input_makeOrder{
   color: #FFFFFF;
@@ -434,5 +529,168 @@ height: 100%;
 }
 .form_back_action_makeoreder{
   height: 19.8888888rem;
-  width: 49rem;
+}
+.activeEl{
+  display: none;
+}
+.rotateShow{
+ rotate:180deg;
+}
+@media (max-width:900px){
+  .makeOrderPage_Inner_Container{
+    flex-direction: column;
+  }
+  .makeorederClass{
+   top: 163px;
+  }
+  .makeOrderPage_Inner_Container_right{
+    background-color: transparent;
+    width: 100%;
+  }
+  .makeOrderPage_Inner_Container_left{
+    width: 100%;
+  }
+  .makeOrderPage header{
+    width: 100%;
+  }
+  .makeOrderPage .dialog_composition_cover{
+    padding: 0px;
+  }
+  .makeOrderPage{
+    padding: 0rem;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .makeOrderPage .order_container_in_total_price{
+    display: none;
+  }
+  .form_back_action_makeoreder .one_ringed_order_button_shop {
+    display: none;
+  }
+  .showMoreButton{
+    top: 4.122222rem;
+    left: 1rem;
+  }
+  .makeOrderPage_Inner_Container_left h1{
+    font-size: 1rem;
+  }
+  .form_back_action_makeoreder{
+    height: 174px;
+  }
+  .makeOrderPage .dialog_composition_backdrop_cover_in .one_ringed_order_button_shop{
+    width: 48vw;
+    height: 26.7vw;
+    min-width: 187px;
+    min-height: 104px;
+  }
+  .makeOrderPage .dialog_composition_backdrop_cover_in .ringed_order_button_in_title{
+    font-size: 1rem;
+  }
+  .class900Up{
+    display: none;
+  }
+  .class900{
+    display: block;
+  }
+}
+@media (min-width:650px) and (max-width: 1023px) {
+  .map_dialog_in{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+        "leftMap leftMap"
+        "RightMap RightMap"
+        "DownMap DownMap";
+  }
+  .dialog_right_up{
+    height: 29rem;
+  }
+  .dialog_left_up{
+    height: 20rem;
+
+  }
+  .dialog_down{
+    height: 23.1666666rem;
+  }
+  .dialog_right_up{
+    padding-bottom: 4.6111111rem;
+  }
+  .close_dialog_form_callback {
+    top:-18rem;
+  }
+  
+}
+@media (max-width: 649px) {
+  .map_dialog_in{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+        "leftMap leftMap"
+        "RightMap RightMap"
+        "DownMap DownMap";
+  }
+  .dialog_right_up{
+    height: 29rem;
+    padding-bottom: 3rem;
+    padding-top: 3rem;
+    padding-right: 3rem;
+  }
+  .close_dialog_form_callback {
+    top: -32rem !important;;
+  }
+  .dialog_left_up{
+    height: 34rem;
+    padding-top: 3rem;
+    padding-left: 2rem;
+  }
+  .dialog_right_up_in{
+    padding-left: 2rem;
+  }
+  .titleHeadMap{
+    margin-bottom: 1rem;
+  }
+  .dialog_left_up_in{
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.4fr 1fr 0.4fr 1fr 1fr;
+    grid-template-areas: "HeadMapone" "mapblockone" "HeadMapsecond" "mapblocksecond" "buttonsinel";
+  }
+  .map_buttons_in_adres{
+    display: none;
+  }
+  .dialog_down{
+    height: 23.1666666rem;
+  }
+  .dialog_right_up{
+    padding-bottom: 4.6111111rem;
+  }
+  .close_dialog_form_callback {
+    top:-18rem;
+  }
+  .titleHeadMapone{
+    grid-area: HeadMapone;
+  }
+  .titleHeadMapsecond{
+    grid-area: HeadMapsecond;
+    align-self: flex-end;
+    margin-top: 3.88888888888rem;
+  }
+  .information_map_blockone{
+    grid-area: mapblockone;
+  }
+  .information_map_blocksecond{
+    grid-area: mapblocksecond;
+  }
+  
+
+  .map_buttons_inel{
+    grid-area: buttonsinel;
+    margin-top: 2rem;
+  }
+  .information_map_block h1{
+    font-size: 2.333333rem!important;
+  }
+  .information_map_block p{
+    margin-top:6px;
+  }
 }

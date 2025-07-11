@@ -6,7 +6,13 @@ const categoryArea = document.querySelector(".cards_product_container");
 
 function heightElem(buttonEelem){
 var buttonwidth = buttonEelem[0].offsetWidth;
-var elemHeight = Math.round(buttonwidth * 0.437);
+ if(document.body.offsetWidth>900){
+    var elemHeight = Math.round(buttonwidth * 0.437);
+ }
+ else if(document.body.offsetWidth<=900){
+    var elemHeight = Math.round(buttonwidth * 0.3);
+ }
+
 for(var elb in buttonEelem){
     buttonEelem[elb].style.height = elemHeight + "px";
 
@@ -39,13 +45,28 @@ function totalpricecreate(){
 
         totalpricein+=globalcart[total].price*globalcart[total].count;
     }
-    document.querySelector(".end_price_shop").innerHTML=totalpricein;
+    var totalcontainer = document.querySelector(".end_price_shop");
+    totalcontainer.innerHTML=`<div class="end_price_shop_insad">${formatNumberWithSpaces(totalpricein)}<span class="rubl rubl_up">₽</span></div>`;
     return totalpricein;
    
 }
-
+function formatNumberWithSpaces(numberString) {
+    numberString+="";
+    // Удаляем все пробелы, если они есть (для чистоты обработки)
+    let cleaned = numberString.replace(/\s/g, '');
+    
+    // Проверяем, что строка содержит только цифры
+    if (!/^\d+$/.test(cleaned)) {
+      throw new Error('Входная строка должна содержать только цифры');
+    }
+    
+    // Разбиваем число на тысячи с пробелами
+    const formatted = cleaned.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    
+    return formatted;
+  }
 function addcart(id,value){
-    console.log(id)
+    //console.log(id)
     for(var elems in Products[value]){
         if(Products[value][elems].id == id){
             globalcart.push(Products[value][elems])
@@ -67,17 +88,17 @@ const duplicates = globalcart.filter((number, index, numbers) => {
             
         // globalcart = globalcart.filter((elemdel) => {
         //     if(cc==0){
-        //         console.log(elemdel)
+        //         //console.log(elemdel)
         //         elemdel !== duplicates[0];
         //     }
-        //     console.log(cc)
+        //     //console.log(cc)
         //     cc++
         // });
         globalcart.splice(globalcart.indexOf(duplicates[0]), 1)
         globalcart.find((updateelem) => {
             return updateelem === duplicates[0]}).count+=1;
     }
-    console.log(openmodal)
+    //console.log(openmodal)
     if(openmodal){
         var shopingcartcontainer = document.querySelector(".shoping_cart_container");
     
@@ -86,9 +107,9 @@ const duplicates = globalcart.filter((number, index, numbers) => {
             // var incart = globalcart.filter(item=> item.id == globalcart[i].id)
             // if(incart.length >1){
             //     globalcart[i].count+=1
-            //     console.log(globalcart[i].id)
-            //     console.log(document.getElementById(`${globalcart[i].id}span`))
-            //     console.log(globalcart[i].count)
+            //     //console.log(globalcart[i].id)
+            //     //console.log(document.getElementById(`${globalcart[i].id}span`))
+            //     //console.log(globalcart[i].count)
             //     document.getElementById(`${globalcart[i].id}span`).innerHTML= `${globalcart[i].count}`;
             // }
             let shopingcartcard = document.createElement("div");
@@ -106,14 +127,14 @@ const duplicates = globalcart.filter((number, index, numbers) => {
                     </div>
                     <button class="button_cansel_setting trashcan" id="${globalcart[i].id}trash" onclick="deletecart(this)"><img src="/assets/trash.svg"></button>
                     <hr class="shoping_cart_card_hr">
-                    <div class="shoping_cart_card_total_price">${globalcart[i].price}</div>
+                    <div class="shoping_cart_card_total_price price_class">${formatNumberWithSpaces(globalcart[i].price)}<span class="rubl rubl_up">₽</span></div>
                     <div class="shoping_cart_card_change_count">
                         <button class="shop_cart_count_button" id="${globalcart[i].id}minus" onclick="minusbutton(this)">-</button>
                         <span class="shop_cart_count" id="${globalcart[i].id}span">${globalcart[i].count}</span>
                         <button class="shop_cart_count_button" id="${globalcart[i].id}plus" onclick="plusbutton(this)">+</button>
                     </div>
                 </div>`;
-                console.log(globalcart[i].id)
+                //console.log(globalcart[i].id)
                 shopingcartcontainer.append(shopingcartcard)
             
            
@@ -394,7 +415,7 @@ Chears:[
             color: "#F0B5FA",
             height: 80,
             isTopProduct:false},
-    { name:"Trinita Santa Lucina",
+    { name:"Santa Lucina",
                 category: "Кресла и стулья",
                 text: "Функциональная дизайнерское кресло для создания максимально уюта в помещении",
                 fabricator: "Paint Here Glory",
@@ -567,23 +588,29 @@ function colorPut(inputSlide){
     if(inputSlide.id == "lampsslide" ){
         Products.Lamps.map((product)=>{
             if(product.isTopProduct){
-                
                 inputSlide.querySelector(".lamp_photo").src = product.photo;
+                inputSlide.querySelector(".card_information_container h2").innerHTML = `${product.name}`;
+                inputSlide.querySelector(".card_information_container p").innerHTML = `${product.text}`;
+                inputSlide.querySelector(".card_information_container .numbers").innerHTML = `<div class='price_inDJsa'>${formatNumberWithSpaces(product.price)}</div><span class="rubl rubl_up">₽</span>`;
+                inputSlide.querySelector(".title_decoration").innerHTML=`${product.fabricator}`
                 inputSlide.querySelector(".title_decoration").style.color = 'rgba(203, 182, 255, 0.6)';
                 inputSlide.querySelector('.ringed_order_button').addEventListener("click", function(){
                     addcart(product.id, 'Lamps')
                 })
+                
             }
         })
     }
     if(inputSlide.id == "chearsslide"){
         Products.Chears.map((product)=>{
             if(product.isTopProduct){
-                inputSlide.style.backgroundColor =  product.color;
+                if(document.body.offsetWidth>900){inputSlide.style.backgroundColor =  product.color;}
                 inputSlide.querySelector(".lamp_photo").src = product.photo;
                 inputSlide.querySelector(".title_decoration").style.color = 'rgba(255, 168, 246, 1)';
-              
-           
+                inputSlide.querySelector(".card_information_container h2").innerHTML = `${product.name}`;
+                inputSlide.querySelector(".card_information_container p").innerHTML = `${product.text}`;
+                inputSlide.querySelector(".title_decoration").innerHTML=`${product.fabricator}`
+                inputSlide.querySelector(".card_information_container .numbers").innerHTML = `<div class='price_inDJsa'>${formatNumberWithSpaces(product.price)}</div><span class="rubl rubl_up">₽</span>`;
                 inputSlide.querySelector('.ringed_order_button').addEventListener("click", function(){
                     addcart(product.id, 'Chears')
                 })
@@ -593,8 +620,13 @@ function colorPut(inputSlide){
     if(inputSlide.id == "tablessslide"){
         Products.Tables.map((product)=>{
             if(product.isTopProduct){
-                inputSlide.style.backgroundColor =  product.color;
+                if(document.body.offsetWidth>900){ inputSlide.style.backgroundColor =  product.color;}
+             
                 inputSlide.querySelector(".lamp_photo").src = product.photo;
+                inputSlide.querySelector(".card_information_container h2").innerHTML = `${product.name}`;
+                inputSlide.querySelector(".card_information_container p").innerHTML = `${product.text}`;
+                inputSlide.querySelector(".title_decoration").innerHTML=`${product.fabricator}`
+                inputSlide.querySelector(".card_information_container .numbers").innerHTML = `<div class='price_inDJsa'>${formatNumberWithSpaces(product.price)}</div><span class="rubl rubl_up">₽</span>`;
                 inputSlide.querySelector(".title_decoration").style.color = 'rgba(190, 216, 255, 1)';
                 inputSlide.querySelector('.ringed_order_button').addEventListener("click", function(){
                     addcart(product.id, 'Tables');
@@ -661,7 +693,7 @@ function appendProductCards(activebutton){
                         <span class="subtitle subtitle_in_product_card" onclick="modalcartFunc('${categoryButtonActivateLast}', '${product.id}')">${product.category}</span>
                         <hr class="hr_in_product_card">
                         <div class="card_price_in_category">
-                            <span class="numbers price">${product.price}</span>
+                            <span class="numbers price">${formatNumberWithSpaces(product.price)}<span class="rubl rubl_up">₽</span></span>
                             <img>
                         </div>
                         <button class="card_buy_button_in_category" onclick="addcart(this.id, this.value)" value="${categoryButtonActivateLast}" id="${product.id}">
@@ -732,7 +764,7 @@ function filterOperation(checkbox){
     categoryArea.innerHTML=""
     
     if(checkbox.checked ==false){
-        console.log(lastActivatedColorArray)
+        //console.log(lastActivatedColorArray)
             if(checkbox.id == "Зеленный"){
                 lastActivatedColorArray = lastActivatedColorArray.filter((element) => element !== greenArray)
             }
@@ -755,7 +787,7 @@ function filterOperation(checkbox){
     }
    
     if(checkbox.checked ==true){
-        console.log("dhua")
+        //console.log("dhua")
         if(checkbox.id == "Зеленный"){
             lastActivatedColorArray.push(greenArray)
         }
@@ -797,7 +829,7 @@ const productcardEmpty = lastProductActiveMasiive.map((product)=>{
                                     <span class="subtitle subtitle_in_product_card" onclick="modalcartFunc('${categoryButtonActivateLast}', '${product.id}')">${product.category}</span>
                                     <hr class="hr_in_product_card">
                                     <div class="card_price_in_category">
-                                        <span class="numbers price">${product.price}</span>
+                                        <span class="numbers price">${formatNumberWithSpaces(product.price)}<span class="rubl rubl_up">₽</span></span>
                                         <img>
                                     </div>
                                     <button class="card_buy_button_in_category" onclick="addcart(this.id, this.value)" value="${categoryButtonActivateLast}" id="${product.id}">
@@ -818,10 +850,26 @@ const productcardEmpty = lastProductActiveMasiive.map((product)=>{
 
 
 })
-                            
+        
 }
+var lasdwadaf;
 var lastProductActiveMasiive;
 function categoryButtonActivate(activebutton){
+    var sdadedasdwwa =activebutton.parentNode;
+    var edddsadawqsad=Array.from(document.querySelectorAll('.main_categories_card'))
+    for(i in edddsadawqsad){
+        if(edddsadawqsad[i]!=activebutton.parentNode)
+        edddsadawqsad[i].classList.remove("suntActive");}
+
+    if(sdadedasdwwa.classList.contains("suntActive")){
+        sdadedasdwwa.classList.remove("suntActive");
+        //console.log(sdadedasdwwa)
+    }
+    else{
+        sdadedasdwwa.classList.add("suntActive");
+        //console.log(sdadedasdwwa)
+    }
+    lasdwadaf = activebutton.id;
 document.querySelector(".cards_product_container_cover").style.display="block";
 yellowArray = [];
 greenArray = [];
@@ -899,7 +947,7 @@ navyblueArray = [];
                     if(color == "Голубой"){
                         colorMassiveAr = blueArray; 
                     }
-                    console.log(colorMassiveAr)
+                    //console.log(colorMassiveAr)
                     let colorcontainer = document.createElement("div")
                     colorcontainer.className= "colorcontainer";
                     colorcontainer.innerHTML = `<input class="checkboxColor" onchange="filterOperation(this)" type="checkbox" id="${color}"> <label for="${color}">${color}</label> <span>${colorMassiveAr.length}</span>`;
@@ -936,14 +984,14 @@ navyblueArray = [];
                             // const productcardEmpty = Products[key].map((product)=>{
                             //     //если id продукта соответсвует, то вывод карточки, то есть сравн
                             //     dadas++;
-                            //     console.log(dadas)
+                            //     //console.log(dadas)
                             //     lastActivatedColorArray.forEach((elem,index,arr)=>{
                                  
                             //         if(product.id == elem[0]){
                             //             nowcountelem++;
                             //             //попробовать просто скрывать эдементы, через display none
                             //             if(nowcountelem <= 5){
-                            //                 console.log(nowcountelem)
+                            //                 //console.log(nowcountelem)
                             //                 let cardproductcontainer = document.createElement("div");
                             //                 cardproductcontainer.className="card_product_container";
                             //                 cardproductcontainer.innerHTML=`<div style="background-color:${product.color};" class="color_card_section"></div>
@@ -1002,8 +1050,7 @@ navyblueArray = [];
                                     <span class="subtitle subtitle_in_product_card" onclick="modalcartFunc('${key}', '${product.id}')">${product.category}</span>
                                     <hr class="hr_in_product_card">
                                     <div class="card_price_in_category">
-                                        <span class="numbers price">${product.price}</span>
-                                        <img>
+                                        <span class="numbers price"><div class='price_inDJsa'>${formatNumberWithSpaces(product.price)}</div><span class="rubl rubl_up">₽</span></span>
                                     </div>
                                     <button class="card_buy_button_in_category" onclick="addcart(this.id, this.value)" value="${key}" id="${product.id}">
                                        <img src="/assets/shopping-cart.svg">
@@ -1042,16 +1089,182 @@ navyblueArray = [];
 
 var ribbonF = document.getElementById("firstRibbon")
 var ribbonS = document.getElementById("secondRibbon")
-var ribbbonwidth = window.screen.width / 384;
-
-
-for (let i = 0; i <= ribbbonwidth; i++){
-    ribbonF.innerHTML += `<span>creating a great art</span>
-                        <img src="/assets/Star 3.svg">`;
-    ribbonS.innerHTML += `<span>creating a great art</span>
-                        <img src="/assets/Star 3.svg">`;
+function getFontSizeAsNumber(element) {
+    const fontSizeString = window.getComputedStyle(element).fontSize;
+    // Если не пиксели, то ничего не делаем
+    if (!fontSizeString.endsWith('px')) {
+      return null;
+    }
+    // Удаляем 'px' и преобразуем в число
+    return parseFloat(fontSizeString);
+  }
+function ribsize(){
+    if(document.body.offsetWidth>1020){
+        ribbonF.style.fontSize="2.083335vw"
+        ribbonS.style.fontSize="2.083335vw"
+    }
+    if(document.body.offsetWidth<=1020 && document.body.offsetWidth>570){
+        ribbonF.style.fontSize="3.19vw"
+        ribbonS.style.fontSize="3.19vw"
+    }
+    if (document.body.offsetWidth<=670 && document.body.offsetWidth>410){
+        ribbonF.style.fontSize="4.19vw"
+        ribbonS.style.fontSize="4.19vw"
+    } 
+    if (document.body.offsetWidth<=410 && document.body.offsetWidth>300){
+        ribbonF.style.fontSize="8.19vw"
+        ribbonS.style.fontSize="8.19vw"
+    }
+    if (document.body.offsetWidth<=300){
+        ribbonF.style.fontSize="10.19vw"
+        ribbonS.style.fontSize="10.19vw"
+    }
+    //console.log((getFontSizeAsNumber(ribbonS) * 21))
+    var ribbbonwidth = window.screen.width / (getFontSizeAsNumber(ribbonS) * 20);
+    //console.log(ribbbonwidth)
+    ribbonF.innerHTML= ` `;
+    ribbonS.innerHTML= ` `;
+    for (let i = 0; i <= ribbbonwidth + 3; i++){
+        ribbonF.innerHTML += `<div>creating a great art</div>
+                            <img src="/assets/Star 3.svg">`;
+        ribbonS.innerHTML += `<div>creating a great art</div>
+                            <img src="/assets/Star 3.svg">`;
+    }
 }
 
 function scrollToelement(scrolling){
     document.getElementById(`${scrolling.value}`).scrollIntoView()
 }
+const scrollContainer = document.getElementById('scrollContainer');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+scrollContainer.addEventListener('mousedown', (e) => {
+    isDown = true;
+    scrollContainer.classList.add('grabbing');
+    startX = e.pageX - scrollContainer.offsetLeft;
+    scrollLeft = scrollContainer.scrollLeft;
+});
+
+scrollContainer.addEventListener('mouseleave', () => {
+    isDown = false;
+    scrollContainer.classList.remove('grabbing');
+});
+
+scrollContainer.addEventListener('mouseup', () => {
+    isDown = false;
+    scrollContainer.classList.remove('grabbing');
+});
+
+scrollContainer.addEventListener('mousemove', (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2; // Умножаем для более быстрого скролла
+    scrollContainer.scrollLeft = scrollLeft - walk;
+});
+scrollContainer.addEventListener('touchstart', (e) => {
+    isDown = true;
+    startX = e.touches[0].pageX - scrollContainer.offsetLeft;
+    scrollLeft = scrollContainer.scrollLeft;
+});
+
+scrollContainer.addEventListener('touchend', () => {
+    isDown = false;
+});
+
+scrollContainer.addEventListener('touchmove', (e) => {
+    if(!isDown) return;
+    const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainer.scrollLeft = scrollLeft - walk;
+});
+var heroblock = document.querySelector('.main_composition');
+var slernad = document.querySelector('.slider_main_composition');
+var headerHs = document.querySelector('header');
+console.log(headerHs)
+function getElementBottom(element) {
+    const rect = element.getBoundingClientRect();
+    console.log(rect.bottom)
+    return rect.bottom;
+  }
+function heroSize(){
+    console.log('resized')
+    console.log(`${heroblock.offsetHeight} start heroblock`)
+if(document.body.offsetWidth<=900){
+    var elemInMainHeight = document.querySelector('.first_slide').offsetHeight ;
+    console.log(elemInMainHeight)
+    var elemInMainHeightBottom = getElementBottom(document.getElementById('lampsslide'));
+       if(elemInMainHeight != window.outerHeight) {
+        console.log(elemInMainHeight, window.outerWidth * 0.45, `${elemInMainHeight + window.outerWidth * 0.45}`, window.outerHeight)
+        if(elemInMainHeight + window.outerWidth * 0.45 >= window.outerHeight * 0.8 ) {
+            var actInSlide = Array.from(document.querySelectorAll('.obs_acive_slide'));
+            var lamsPhotos = Array.from(document.querySelectorAll('.lamp_photo'))
+            console.log(lamsPhotos)
+                for(var ie in actInSlide){
+                    console.log(actInSlide)
+                    actInSlide[ie].style.height = `${window.outerHeight - window.outerWidth * 0.45}px`;
+                }
+                for(var esda in lamsPhotos){
+                    console.log(actInSlide)
+                    lamsPhotos[esda].style.height = `57%`;
+                    lamsPhotos[esda].style.top = `22%`;
+                }
+                heroblock.style.height = "100vh";
+                console.log(`${heroblock.offsetHeight} if heroblock`)
+                console.log(heroblock.offsetHeight - slernad.offsetHeight * 2)
+                // slernad.style.top=`${elemInMainHeight - headerHs.offsetHeight  - slernad.offsetHeight}px`
+            
+                slernad.style.top=`${heroblock.offsetHeight - slernad.offsetHeight * 2}px`
+           }
+        else{ 
+            var lamsPhotos = Array.from(document.querySelectorAll('.lamp_photo'))
+            for(var esda in lamsPhotos){
+                console.log(actInSlide)
+                lamsPhotos[esda].style.height = `65%`;
+                lamsPhotos[esda].style.top = `22%`;
+            }
+            heroblock.style.height= `${elemInMainHeight + window.outerWidth * 0.45}px`; 
+            console.log(`${heroblock.offsetHeight} else heroblock`)
+            console.log(elemInMainHeight)
+            slernad.style.top=`${(elemInMainHeight + (window.outerWidth * 0.45)) - headerHs.offsetHeight  - slernad.offsetHeight -  headerHs.offsetHeight/2.1 }px`
+        }
+       }
+
+    
+    // else if(Math.trunc(document.body.offsetWidth / 100) == Math.trunc(window.outerHeight / 100)){
+    //     heroblock.style.height=`${heightDef}vh`
+    //     console.log(1)
+    // }
+    // else if(document.body.offsetWidth>window.outerHeight){ 
+    //     var sizeH = window.outerHeight;
+    //     var sizeW = window.outerWidth;
+    //     var sizeinCo = sizeW - sizeH;
+    //     heroblock.style.height=`${heightDef - Math.trunc(sizeinCo / 100)}vh`;
+    //     console.log(2)
+    // }
+    // else if(document.body.offsetWidth<window.outerHeight){
+    //     var sizeHe = window.outerHeight;
+    //     var sizeWe = window.outerWidth;
+    //     var sizeinCoe = sizeWe - sizeHe;
+    //     heroblock.style.height=`${heightDef - Math.trunc(sizeinCoe / 100)}vh`;
+    //     console.log(3)
+    // }
+}
+}
+
+window.addEventListener('load', (e) => {
+    ribsize()
+    heroSize()
+    
+  });
+window.addEventListener('resize', (e) => {
+    ribsize()
+    heroSize()
+    // if(document.body.offsetWidth<= 900){
+    //     colorPut(slideFirst);
+    //     colorPut(slideSecond);
+    //     colorPut(slideThird);
+    // }
+  });

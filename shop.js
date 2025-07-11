@@ -1,16 +1,20 @@
 var allDialogs = document.querySelectorAll('.dialog_composition');
 var shopingCardOrder = document.querySelector(".shpoingcartOreder_container");
-
+var inerButtonPrice = document.querySelector('.makeOrderPage .dialog_composition_backdrop_cover_in .ringed_order_button_in_title span');
+var shopCartModal = false;
 allDialogs = Array.from(allDialogs)
+allDialogs.push(document.querySelector('.makeOrderPage'))
 function buyItems(tocart){
+    shopCartModal = true;
     makeoreder.showModal();
+    shopingCardOrder.innerHTML=' ';
     for(i in globalcart){
         // var incart = globalcart.filter(item=> item.id == globalcart[i].id)
         // if(incart.length >1){
         //     globalcart[i].count+=1
-        //     console.log(globalcart[i].id)
-        //     console.log(document.getElementById(`${globalcart[i].id}span`))
-        //     console.log(globalcart[i].count)
+        //     //console.log(globalcart[i].id)
+        //     //console.log(document.getElementById(`${globalcart[i].id}span`))
+        //     //console.log(globalcart[i].count)
         //     document.getElementById(`${globalcart[i].id}span`).innerHTML= `${globalcart[i].count}`;
         // }
         let shopingcartcardModal = document.createElement("div");
@@ -28,15 +32,21 @@ function buyItems(tocart){
                 </div>
                 <button class="button_cansel_setting trashcan" id="${globalcart[i].id}trash" onclick="deletecart(this)"><img src="/assets/trash.svg"></button>
                 <hr class="shoping_cart_card_hr">
-                <div class="shoping_cart_card_total_price">${globalcart[i].price}</div>
+                <div class="shoping_cart_card_total_price price_class">${formatNumberWithSpaces(globalcart[i].price)}<span class="rubl rubl_up">₽</span></div>
                 <div class="shoping_cart_card_change_count">    
                     <span class="shop_cart_count" id="${globalcart[i].id}span">${globalcart[i].count}</span>
                 </div>
             </div>`;
-            console.log(globalcart[i].id)
+            //console.log(globalcart[i].id)
             shopingCardOrder.append(shopingcartcardModal)
         
        
+    }
+    if(document.body.offsetWidth <= 900){
+        inerButtonPrice.innerHTML=`<span>Заказать</span>`
+    }
+    else{
+        inerButtonPrice.innerHTML=`${formatNumberWithSpaces(totalprice)}<span class="rubl rubl_up">₽</span>`
     }
 
 }
@@ -49,10 +59,13 @@ function closedialog(close){
         openfavorit=false;
     }
     if(close.value == 'profilepage'){
-        openpedofile=false;
+        openprofile=false;
     }
     if(close.value == 'searchpage'){
         opensearch=false;
+    }
+    if(close.value == 'shpoingcart'){
+        shopCartModal=false;
     }
 }
 
@@ -66,8 +79,13 @@ function modalcart(button){
     }
     openmodal=true;
     
-    console.log(globalcart)
-    shpoingcart.show()
+    //console.log(globalcart)
+    if(document.body.offsetWidth<=900){
+        shpoingcart.showModal()
+    }
+    else{
+        shpoingcart.show()
+    }
     var shopingcartcontainer = document.querySelector(".shoping_cart_container");
     if(globalcart.length==0){
         shopingcartcontainer.innerHTML=`<span class="empty_cart">Здесь пока пусто</span>`;
@@ -79,9 +97,9 @@ function modalcart(button){
         // var incart = globalcart.filter(item=> item.id == globalcart[i].id)
         // if(incart.length >1){
         //     globalcart[i].count+=1
-        //     console.log(globalcart[i].id)
-        //     console.log(document.getElementById(`${globalcart[i].id}span`))
-        //     console.log(globalcart[i].count)
+        //     //console.log(globalcart[i].id)
+        //     //console.log(document.getElementById(`${globalcart[i].id}span`))
+        //     //console.log(globalcart[i].count)
         //     document.getElementById(`${globalcart[i].id}span`).innerHTML= `${globalcart[i].count}`;
         // }
         let shopingcartcard = document.createElement("div");
@@ -99,14 +117,14 @@ function modalcart(button){
                 </div>
                 <button class="button_cansel_setting trashcan" id="${globalcart[i].id}trash" onclick="deletecart(this)"><img src="/assets/trash.svg"></button>
                 <hr class="shoping_cart_card_hr">
-                <div class="shoping_cart_card_total_price">${globalcart[i].price}</div>
+                <div class="shoping_cart_card_total_price price_class">${formatNumberWithSpaces(globalcart[i].price)}<span class="rubl rubl_up">₽</span></div>
                 <div class="shoping_cart_card_change_count">
                     <button class="shop_cart_count_button" id="${globalcart[i].id}minus" onclick="minusbutton(this)">-</button>
                     <span class="shop_cart_count" id="${globalcart[i].id}span">${globalcart[i].count}</span>
                     <button class="shop_cart_count_button" id="${globalcart[i].id}plus" onclick="plusbutton(this)">+</button>
                 </div>
             </div>`;
-            console.log(globalcart[i].id)
+            //console.log(globalcart[i].id)
             shopingcartcontainer.append(shopingcartcard)
         
        
@@ -149,20 +167,74 @@ function deletecart(trash){
     globalcart=globalcart.filter((fordelete)=>{
         return fordelete !== deletelelem;
     })
+    totalprice= totalpricecreate()
     var shopingcartcontainer = document.querySelector(".shoping_cart_container");
     if(globalcart.length==0){
         shopingcartcontainer.innerHTML=`<span class="empty_cart">Здесь пока пусто</span>`;
+        shopingCardOrder.innerHTML=`<span class="empty_cart">Здесь пока пусто</span>`;
+        if(document.body.offsetWidth <= 900){
+        inerButtonPrice.innerHTML=`<span>Заказать</span>`}
+        else{
+            inerButtonPrice.innerHTML=`<span>Вернуться</span>`
+        }
+        console.log("if0")
     }
     if(globalcart.length>0){
         shopingcartcontainer.innerHTML="";
+        shopingCardOrder.innerHTML="";
+        if(document.body.offsetWidth <= 900){
+            inerButtonPrice.innerHTML=`${formatNumberWithSpaces(totalprice)}<span class="rubl rubl_up">₽</span>`;
+        }
+        else{
+            inerButtonPrice.innerHTML=`<span>Заказать</span>`;
+        }
+        console.log("if>0")
+    }
+    if(shopCartModal){
+        for(i in globalcart){
+            // var incart = globalcart.filter(item=> item.id == globalcart[i].id)
+            // if(incart.length >1){
+            //     globalcart[i].count+=1
+            //     //console.log(globalcart[i].id)
+            //     //console.log(document.getElementById(`${globalcart[i].id}span`))
+            //     //console.log(globalcart[i].count)
+            //     document.getElementById(`${globalcart[i].id}span`).innerHTML= `${globalcart[i].count}`;
+            // }
+            let shopingcartcardModal = document.createElement("div");
+            shopingcartcardModal.className="shoping_cart_card";
+            shopingcartcardModal.innerHTML=`<img class="card_cart_img" src=${globalcart[i].photo}>
+                <div class="shoping_cart_card_right">
+                    <div class="shoping_cart_card_name">
+                         <div class="shoping_cart_card_name_area">
+                            <div style="background-color:${globalcart[i].color};" class="color_card_sections"></div>
+                            <span>${globalcart[i].name}</span>
+                         </div>
+                         <div class="shoping_cart_card_object_name">
+                         ${globalcart[i].category}
+                         </div>
+                    </div>
+                    <button class="button_cansel_setting trashcan" id="${globalcart[i].id}trash" onclick="deletecart(this)"><img src="/assets/trash.svg"></button>
+                    <hr class="shoping_cart_card_hr">
+                    <div class="shoping_cart_card_total_price price_class">${formatNumberWithSpaces(globalcart[i].price)}<span class="rubl rubl_up">₽</span></div>
+                    <div class="shoping_cart_card_change_count">    
+                        <span class="shop_cart_count" id="${globalcart[i].id}span">${globalcart[i].count}</span>
+                    </div>
+                </div>`;
+                //console.log(globalcart[i].id)
+                shopingCardOrder.append(shopingcartcardModal)
+            
+           
+        }
+        
     }
     for(i in globalcart){
+        console.log(globalcart[i])
         // var incart = globalcart.filter(item=> item.id == globalcart[i].id)
         // if(incart.length >1){
         //     globalcart[i].count+=1
-        //     console.log(globalcart[i].id)
-        //     console.log(document.getElementById(`${globalcart[i].id}span`))
-        //     console.log(globalcart[i].count)
+        //     //console.log(globalcart[i].id)
+        //     //console.log(document.getElementById(`${globalcart[i].id}span`))
+        //     //console.log(globalcart[i].count)
         //     document.getElementById(`${globalcart[i].id}span`).innerHTML= `${globalcart[i].count}`;
         // }
        
@@ -181,19 +253,21 @@ function deletecart(trash){
                 </div>
                 <button class="button_cansel_setting trashcan" id="${globalcart[i].id}trash" onclick="deletecart(this)"><img src="/assets/trash.svg"></button>
                 <hr class="shoping_cart_card_hr">
-                <div class="shoping_cart_card_total_price">${globalcart[i].price}</div>
+                <div class="shoping_cart_card_total_price price_class">${formatNumberWithSpaces(globalcart[i].price)}<span class="rubl rubl_up">₽</span></div>
                 <div class="shoping_cart_card_change_count">
                     <button class="shop_cart_count_button" id="${globalcart[i].id}minus" onclick="minusbutton(this)">-</button>
                     <span class="shop_cart_count" id="${globalcart[i].id}span">${globalcart[i].count}</span>
                     <button class="shop_cart_count_button" id="${globalcart[i].id}plus" onclick="plusbutton(this)">+</button>
                 </div>
             </div>`;
-           
+            console.log(shopingcartcard)
             shopingcartcontainer.append(shopingcartcard)
+            
+            
         
        
     }
-    console.log(globalcart)
+    //console.log(globalcart)
     buttonspmopeartion()
     totalprice= totalpricecreate()
 }
@@ -218,9 +292,29 @@ function buttonspmopeartion() {
 //         totalprice+=globalcart[total].price;
 //     }
 //     document.querySelector('.end_price_shop').innerHTML=totalprice;
-//     console.log(totalprice)
+//     //console.log(totalprice)
     
 // }
 function buy(buybutton){
+
+}
+function formatNumberWithSpaces(numberString) {
+    numberString+="";
+    // Удаляем все пробелы, если они есть (для чистоты обработки)
+    let cleaned = numberString.replace(/\s/g, '');
+    
+    // Проверяем, что строка содержит только цифры
+    if (!/^\d+$/.test(cleaned)) {
+      throw new Error('Входная строка должна содержать только цифры');
+    }
+    
+    // Разбиваем число на тысячи с пробелами
+    const formatted = cleaned.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    
+    return formatted;
+  }
+function showMore(eldsa){
+    document.querySelector('.shpoingcartOreder_container').classList.toggle('activeEl');
+    eldsa.classList.toggle("rotateShow")
 
 }

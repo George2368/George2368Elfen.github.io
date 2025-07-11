@@ -38,7 +38,7 @@ searchareain.onkeyup = function(event){
                         <span class="subtitle subtitle_in_product_card" onclick="modalcartFunc('${key}', '${findersddsadadaad[i].id}')">${findersddsadadaad[i].category}</span>
                         <hr class="hr_in_product_card">
                         <div class="card_price_in_category">
-                            <span class="numbers price">${findersddsadadaad[i].price}</span>
+                            <span class="numbers price">${formatNumberWithSpaces(findersddsadadaad[i].price)}<span class="rubl rubl_up">₽</span></span>
                             <img>
                         </div>
                         <button class="card_buy_button_in_category" onclick="addcart(this.id, this.value)" value="${key}" id="${findersddsadadaad[i].id}">
@@ -52,11 +52,11 @@ searchareain.onkeyup = function(event){
 
    }
   
-    // console.log(findersddsadadaad)
-    // console.log(foundedelem)
+    // //console.log(findersddsadadaad)
+    // //console.log(foundedelem)
 }
 // searchareain.oninput= function(event){
-//         console.log(Products.Mirrors.find((eventsearch, index ,array)=>{ 
+//         //console.log(Products.Mirrors.find((eventsearch, index ,array)=>{ 
 //             const foundedelem = event.target.value;
 //             regexp = new RegExp(`${foundedelem}`, "i");
 //             return eventsearch.name.search(foundedelem)}))

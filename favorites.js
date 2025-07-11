@@ -8,7 +8,10 @@ function openfavoritesmodal(favorite){
         }
     }
     openfavorit = true;
-    favoritetocartpage.show()
+    if(document.body.offsetWidth<=900){
+        favoritetocartpage.showModal()
+    }
+    else{favoritetocartpage.show()}
     var favoritecarcont = document.querySelector('.favorite_cart_container');
     favoritecarcont.innerHTML=""
     for (var i in favoriteArray){
@@ -28,7 +31,7 @@ function openfavoritesmodal(favorite){
                     </div>
                     <button class="favor_trashcan like_it_button like_it_button_active button_cansel_setting" id="${favoriteArray[i].id}favor" onclick="addFavoriteArray('${favoriteArray[i].name}','${favoriteArray[i].id}', '${favoriteArray[i].photo}', '${favoriteArray[i].price}', '${favoriteArray[i].category}')"><img src="/assets/heartba.svg"></button>
                     <hr class="favor_shoping_cart_card_hr">
-                    <div class="fshoping_cart_card_total_price">${favoriteArray[i].price}</div>
+                    <div class="fshoping_cart_card_total_price price_class">${formatNumberWithSpaces(favoriteArray[i].price)}<span class="rubl rubl_up">₽</span></div>
                     
                 </div>`;
            
@@ -84,7 +87,7 @@ function addFavoriteArray(name, id, photo, price, category, color){
                         </div>
                         <button class="favor_trashcan like_it_button like_it_button_active button_cansel_setting" id="${favoriteArray[i].id}favor" onclick="addFavoriteArray('${favoriteArray[i].name}','${favoriteArray[i].id}', '${favoriteArray[i].photo}', '${favoriteArray[i].price}', '${favoriteArray[i].category}')"><img src="/assets/heartba.svg"></button>
                         <hr class="favor_shoping_cart_card_hr">
-                        <div class="fshoping_cart_card_total_price">${favoriteArray[i].price}</div>
+                        <div class="fshoping_cart_card_total_price price_class">${formatNumberWithSpaces(favoriteArray[i].price)}<span class="rubl rubl_up">₽</span></div>
                         
                     </div>`;
                
@@ -117,7 +120,7 @@ function addFavoriteArray(name, id, photo, price, category, color){
                         </div>
                         <button class="favor_trashcan like_it_button like_it_button_active button_cansel_setting" id="${favoriteArray[i].id}favor" onclick="addFavoriteArray('${favoriteArray[i].name}','${favoriteArray[i].id}', '${favoriteArray[i].photo}', '${favoriteArray[i].price}', '${favoriteArray[i].category}')"><img src="/assets/heartba.svg"></button>
                         <hr class="favor_shoping_cart_card_hr">
-                        <div class="fshoping_cart_card_total_price">${favoriteArray[i].price}</div>
+                        <div class="fshoping_cart_card_total_price price_class">${formatNumberWithSpaces(favoriteArray[i].price)}<span class="rubl rubl_up">₽</span></div>
                         
                     </div>`;
                

@@ -1,5 +1,15 @@
 let startvisiblenews = 0;
 let visiblenews = 3;
+
+function titlesize(chanedwasda, sizecount){
+    for(i in chanedwasda){
+    var parentTitle= chanedwasda[i].parentNode.offsetWidth;
+    var titleSIZEDsize = parentTitle / sizecount;
+    //console.log(chanedwasda[i])
+    //console.log(chanedwasda[i].style.fontSize)
+    chanedwasda[i].style.fontSize=`${titleSIZEDsize}px`
+    }
+}
 function onLoadVisible(){
     if(document.documentElement.clientWidth <=2560  && document.documentElement.clientWidth > 1920){
         visiblenews = 4;
@@ -42,8 +52,8 @@ const NewsArray= [
 var n=0;
 for(var key in NewsArray){
     NewsArray[key].objectnew.id=`IdNs${n++}}`
-    NewsArray[key].objectnew.name=NewsArray[key].objectnew.name.replace(" ", "<br>")
-    NewsArray[key].objectnew.date=NewsArray[key].objectnew.date.replace(" 20", "<br> 20")
+    NewsArray[key].objectnew.name=NewsArray[key].objectnew.name.replace(" ","<br>")
+    NewsArray[key].objectnew.date=NewsArray[key].objectnew.date.replace("20","<br>20")
 }
 
 var newsaraea = document.querySelector(".main_news_block_body_card_news_block")
@@ -56,14 +66,16 @@ for(var i=startvisiblenews; i < visiblenews; i++ ){
         <span class="card_news_number">0${NewsArray.indexOf(NewsArray[i]) + 1}</span>
         <span style="text-align: right">${NewsArray[i].objectnew.name}</span>
     </div>
-    <h2>${NewsArray[i].objectnew.title}</h2>
+    <div class="h2news_leftPart_header">${NewsArray[i].objectnew.title}</div>
     <p>${NewsArray[i].objectnew.date}</p>
     </div>
     <div class="main_news_block_body_card_news_rightPart"><img src=${NewsArray[i].objectnew.photo}></div>
     <button class="reading_time_block button_card_category button_cansel_setting"><span>${NewsArray[i].objectnew.timereading}</span>мин</button>
     `;
     newsaraea.append(cardnewscontainer)
+ 
 }
+  
 for(var i=0;i< NewsArray.length/stepfornextnews;i++){
     let paginatornews = document.createElement("button");
     paginatornews.className="paginator_news";
@@ -98,13 +110,14 @@ function appendnewnews(){
             <span class="card_news_number">0${NewsArray.indexOf(NewsArray[i]) + 1}</span>
             <span style="text-align: right">${NewsArray[i].objectnew.name}</span>
         </div>
-        <h2>${NewsArray[i].objectnew.title}</h2>
+        <div class="h2news_leftPart_header">${NewsArray[i].objectnew.title}</div>
         <p>${NewsArray[i].objectnew.date}</p>
         </div>
         <div class="main_news_block_body_card_news_rightPart"><img src=${NewsArray[i].objectnew.photo}></div>
         <button class="reading_time_block button_card_category button_cansel_setting"><span>${NewsArray[i].objectnew.timereading}</span>мин</button>
         `;
         newsaraea.append(cardnewscontainer)
+       
         countelemsnews();
         resetSetntwswidthHeight()
     }  
@@ -143,7 +156,7 @@ function countelemsnews(){
 }
 function slider(idbutton){
     countelemsnews()
-    console.log(stepfornextnews)
+    //console.log(stepfornextnews)
     if(idbutton=="plusbutton" && visiblenews !=NewsArray.length){
         startvisiblenews= startvisiblenews + stepfornextnews;
         visiblenews = visiblenews +stepfornextnews;
@@ -169,19 +182,19 @@ function slider(idbutton){
 }
 function resetSetntwswidthHeight(){
     if(stepfornextnews==1){
-        console.log(1)
+        //console.log(1)
         heightReset(document.querySelectorAll(".main_news_block_body_card_news"), 0.6 , 1)
     }
     if(stepfornextnews==2){
-        console.log(2)
+        //console.log(2)
         heightReset(document.querySelectorAll(".main_news_block_body_card_news"), 0.29, 0.49)
     }
     if(stepfornextnews==3){
-        console.log(3)
+        //console.log(3)
         heightReset(document.querySelectorAll(".main_news_block_body_card_news"), 0.19, 0.32)
     }
     if(stepfornextnews==4){
-        console.log(4)
+        //console.log(4)
         heightReset(document.querySelectorAll(".main_news_block_body_card_news"), 0.19, 0.28)
     }
 }
@@ -192,30 +205,61 @@ paddingActive()
 function heightReset(elem, number, numberw){
     for(var i=0; i < elem.length; i++){
         const parentwidth = elem[i].parentNode.offsetWidth;
-        console.log(parentwidth)
+        //console.log(parentwidth)
         elem[i].style.height = `${parentwidth * number}px`;
         elem[i].style.width = `${parentwidth * numberw}px`
     }
 }
-
+var contactsector = Array.from(document.querySelectorAll('.to_contact'))
 window.addEventListener('load', (e)=>{
     resetSetntwswidthHeight();
     heightElem(buttonEelem);
     navButonsResize()
     document.getElementById('plusbutton').innerText=`0${NewsArray.length}`
 document.getElementById('minusbutton').innerText=`0${startvisiblenews+1}`
+if(document.body.offsetWidth<=900){
+    for(var el in contactsector){
+        contactsector[el].innerHTML=`<img src="/assets/callsvg.svg">`
+    }
+}
+
 });
+
 window.addEventListener('resize', (e) => {
+//     if(document.body.offsetWidth>500){
+//         titlesize(h2News, 9.821)
+//     }
+// else{
+//         titlesize(h2News, 11)
+//         //console.log('/edsa')
+//     }
+
     resetSetntwswidthHeight();
     heightElem(buttonEelem);
     buttonsnews.innerHTML = '';
     startvisiblenews=0;
     activepaddingnow=0;
     navButonsResize()
+   
     onLoadVisible()
     appendnewnews()
+    
     countelemsnews()
     appendblognews()
+    
     padingarray = document.querySelectorAll(".paginator_news");
     nowactivepadding()
+    var h2News= Array.from(document.querySelectorAll('.h2news_leftPart_header'))
+    titlesize(h2News, 9.821)
+    if(document.body.offsetWidth<=900){
+        for(var el in contactsector){
+            contactsector[el].innerHTML=`<img src="/assets/callsvg.svg">`
+        }
+    }
+    else if(document.body.offsetWidth>900){
+        for(var el in contactsector){
+            contactsector[el].innerHTML=`Контакты`
+        }
+    }
+
   });

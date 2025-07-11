@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="stylemodal.css">
     <title>Document</title>
-    <script src="https://api-maps.yandex.ru/v3/?apikey=97f83626-f906-4a19-8d06-db4bf8a375a9&lang=ru_RU"></script>
-    <script src="/mapYande.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=97f83626-f906-4a19-8d06-db4bf8a375a9
+    &lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
     <header>
@@ -40,14 +40,22 @@
         </div>
     </header>
     <main>
-        <div class="main_composition">
-            <div class="first_slide active_slide" id="lampsslide">
+        <div class="slider_main_composition">
+            <div class="slider_main_composition_in">
+                <button class="button_cansel_setting" id="buttoninslider">01</button>
+                <div class="vertical_line"></div>
+                <button class="button_cansel_setting">03</button>
+            </div>
+        </div>
+        <div class="main_composition" id="scrollContainery">
+            
+                <div class="first_slide active_slide slide_observe" id="lampsslide">
                 <img class="lamp_photo">
                 <div class="slide_number_container">
                     <span class="subtitle">слайд</span>
                     <span class="numbers subtitle_numbers">01</span>
                 </div>
-                <div class="active_slide_card">
+                <div class="active_slide_card obs_acive_slide">
                     <div class="lamp_day_title_container">
                         <span class="title_day">товар дня</span>
                         <span class="title_decoration">Benjamin Moore</span>
@@ -73,13 +81,13 @@
                 </div>
                 
             </div>
-            <div class="second_slide disable_slide" id="chearsslide">
+            <div class="second_slide disable_slide slide_observe" id="chearsslide">
                 <img class="lamp_photo" >
                 <div class="slide_number_container">
                     <span class="subtitle">слайд</span>
                     <span class="numbers subtitle_numbers">02</span>
                 </div>
-                <div class="disable_slide_card">
+                <div class="disable_slide_card obs_acive_slide">
                     
                     <div class="lamp_day_title_container">
                         <span class="title_day">товар дня</span>
@@ -105,13 +113,13 @@
                         </button>
                 </div>
             </div>
-            <div class="third_slide disable_slide" id="tablessslide">
+            <div class="third_slide disable_slide slide_observe" id="tablessslide">
                 <img class="lamp_photo">
                 <div class="slide_number_container">
                     <span class="subtitle">слайд</span>
                     <span class="numbers subtitle_numbers">03</span>
                 </div>
-                <div class="disable_slide_card">
+                <div class="disable_slide_card obs_acive_slide">
                     
                     <div class="lamp_day_title_container">
                         <span class="title_day">товар дня</span>
@@ -137,6 +145,7 @@
                         </button>
                 </div>
             </div>
+            
             <dialog class="product_modal_container" id="cardmodal" >
                
             </dialog>
@@ -151,7 +160,7 @@
                             
                         </div>
                         <div class="order_container_in">
-                            <div>
+                            <div class="order_container_in_total_price">
                                 <span>Итого:</span>
                                 <span class="end_price_shop"></span>
                             </div>
@@ -187,15 +196,15 @@
         <dialog class="dialog_composition" id="profilepage">
             <div class="dialog_composition_backdrop_cover">
                 <div class="dialog_composition_backdrop"></div>
-              <div class="dialog_composition_backdrop_cover_in"><button class="close_dialog button_cansel_setting" value="profilepage" onclick="closedialog(this)"><img src="/assets/x.svg"></button>
+              <div class="dialog_composition_backdrop_cover_in logasf_cover_in"><button class="close_dialog button_cansel_setting" value="profilepage" onclick="closedialog(this)"><img src="/assets/x.svg"></button>
                 <div class="dialog_composition_cover dialog_composition_cover_favor">
                     <h3 class="title_dialog form_title_dialog">Вход</h3>
                 <div class="dailog_composition_in">
                     <div class="favorite_cart_container" id="registrationF">
-                        <form class="autor_form login_form">
-                            <input type="email" placeholder="E-mail">
-                            <input type="password" placeholder="Пароль">
-                            <button class="one_ringed_order_button_shop autor_form_button button_cansel_setting" onclick="loginFunc(this)">
+                        <form class="autor_form login_form"  id="logForm">
+                            <input type="email" placeholder="E-mail" name="Email" class="logIn">
+                            <input type="password" placeholder="Пароль" name="Password" class="logIn">
+                            <button class="one_ringed_order_button_shop autor_form_button autor_form_button_log button_cansel_setting" type="submit">
                                 <div class="ringed_order_button_in_first ringed_order_button_in_autor"></div>
                                 <div class="ringed_order_button_in_title ringed_order_button_in_title_one_circle">
                                     <span>Войти</span>
@@ -203,15 +212,15 @@
                                 </div>
                             </button>
                         </form>
-                        <button onclick="changeReg(this)" class="button_cansel_setting" id="registration">нет аккаунта?
-                            Регистрация</button>
+                        <button onclick="changeReg(this)" class="button_cansel_setting" id="registration"><span class="regSpanDisplay">нет аккаунта?</span>
+                            <span>Регистрация</span><img src="/assets/ArrowOne.svg" alt=""></button>
                     </div>
                     <div class="favorite_cart_container wshowchane" id="loginF">
-                        <form class="autor_form login_form">
-                            <input type="email" placeholder="E-mail" class="RegIn">
-                            <input type="password" placeholder="Пароль" class="RegIn">
-                            <input type="password" placeholder="повторите пароль" class="RegIn">
-                            <button class="one_ringed_order_button_shop autor_form_button button_cansel_setting" onclick="RegFunc(this)">
+                        <form class="autor_form reg_form" id="regForm">
+                            <input type="email" placeholder="E-mail" id="emailR" name="Email" class="RegIn">
+                            <input type="password" placeholder="Пароль" id="passwordR" name="Password" class="RegIn">
+                            <input type="password" placeholder="Повторите пароль" id="conFpasswordR" class="RegIn">
+                            <button class="one_ringed_order_button_shop autor_form_button  autor_form_button_reg button_cansel_setting" type="submit">
                                 <div class="ringed_order_button_in_first ringed_order_button_in_autor"></div>
                                 <div class="ringed_order_button_in_title ringed_order_button_in_title_one_circle">
                                     <span>Регистрация</span>
@@ -219,7 +228,7 @@
                                 </div>
                             </button>
                         </form>
-                        <button onclick="changeReg(this)" class="button_cansel_setting" id="login">вход</button>
+                        <button onclick="changeReg(this)" class="button_cansel_setting" id="login"><img src="/assets/ArrowOne.svg" alt=""><span>вход</span></button>
                     </div>
                    </div>
                 </div>
@@ -270,20 +279,20 @@
             <div class="map_dialog_in">
                 <div class="dialog_left_up">
                     <div class="dialog_left_up_in">
-                        <span class="titleHeadMap">Адрес</span>
-                        <span class="titleHeadMap">Телефон</span>
-                        <div class="information_map_block">
+                        <span class="titleHeadMap titleHeadMapone">Адрес</span>
+                        <span class="titleHeadMap titleHeadMapsecond">Телефон</span>
+                        <div class="information_map_block information_map_blockone">
                             <h1>Москва</h1>
                             <p>Хохловский переулок д. 11, стр. 3</p>
                         </div>
-                        <div class="information_map_block">
+                        <div class="information_map_block information_map_blocksecond">
                             <h1 class="information_map_block_tel">+7 (495) 621-26-17</h1>
                             <p class="information_map_block_p">Ответим на все вопросы</p>
                         </div>
                         <div class="map_buttons_in map_buttons_in_adres"><div>Адрес на карте</div><img src="/assets/socialAssets/Arrow 4.svg"></div>
 
                       
-                        <div class="map_buttons_in">
+                        <div class="map_buttons_in map_buttons_inel">
                             <a><img src="/assets/socialAssets/telegramm.svg"></a>
                             <a><img src="/assets/socialAssets/twitter.svg"></a>
                             <a><img src="/assets/socialAssets/in.svg"></a>
@@ -292,16 +301,16 @@
                     </div>
                 </div>
                 <div class="dialog_right_up">
-                    <button class="close_dialog button_cansel_setting" value="mapPage" onclick="closedialog(this)"><img src="/assets/x.svg"></button>
+                    <button class="close_dialog button_cansel_setting close_dialog_form_callback" value="mapPage" onclick="closedialog(this)"><img src="/assets/x.svg"></button>
                     <div class="dialog_right_up_in">
                         <span class="subtitle">Форма обратной связи</span>  
-                        <form class="form_back_action">
+                        <form class="form_back_action" name="callbackForm_incontant" action="">
                             <input type="email" placeholder="E-mail">
                             <input type="password" placeholder="Пароль">
-                            <button class="one_ringed_order_button_shop autor_form_button button_cansel_setting" onclick="loginFunc(this)">
-                                <div class="ringed_order_button_in_first ringed_order_button_in_autor"></div>
+                            <button class="one_ringed_order_button_shop button_cansel_setting" onclick="sendForm(this)">
+                                <div class="ringed_order_button_in_first ringed_order_button_in_fomvcallback"></div>
                                 <div class="ringed_order_button_in_title ringed_order_button_in_title_one_circle">
-                                    <span>Войти</span>
+                                    <span>Отправить</span>
                                     
                                 </div>
                             </button>
@@ -309,19 +318,49 @@
                     </div>
                 </div>
                 <div class="dialog_down">
-                    <div id="map" style="width: 600px; height: 400px"></div>
+                    <div id="map" style="width: 100%; height: 100%"></div>
                 </div>
             </div>
         </dialog>
         <dialog id="makeoreder" class="makeOrderPage">
+             <header>
+                <h1 class="logo">Elfen lied</h1>
+                <div class="header_cover">
+                    <div class="header_d">
+                        <button class="catalog_container_button header_inner_component button_cansel_setting">
+                            <img src="/assets/dots.svg">
+                            <span class="text">Каталог</span>
+                        </button>
+                        <div class="news_contacts_container header_inner_component">
+                            <a class="text">Блог</a>
+                            <button class="text button_cansel_setting to_contact" onclick="showMap(this)">Контакты</button>
+                        </div>
+                        <div class="header_d_on_slides_component">
+                            <button class="search_header_container header_inner_component button_cansel_setting" value="searchpage" onclick="opensearchFunc(this)">
+                                <img src="/assets/search.svg">
+                                <span class="text">Поиск</span>
+                            </button>
+                            <div class="user_manipulation_container header_inner_component">
+                                <button class="button_cansel_setting" value="favoritetocartpage" onclick="openfavoritesmodal(this)"><img src="/assets/избранное.svg"></button>
+                                <button class="button_cansel_setting" value="profilepage" onclick="openProfile(this)"><img src="/assets/профиль.svg"></button>
+                                <button class="button_cansel_setting" value="shpoingcart" onclick="modalcart(this)"><img src="/assets/корзина.svg"></button>
+        
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="header_m"></div>
+                </div>
+            </header>
             <div class="makeOrderPage_Inner_Container">
+                <button class="close_dialog button_cansel_setting class900 makeorederClass" value="makeoreder" onclick="closedialog(this)"><img src="/assets/x.svg"></button>
                 <div class="makeOrderPage_Inner_Container_left">
                     <h1>Оформление заказа</h1>
-                    <form class="form_back_action form_back_action_makeoreder">
+                    <form class="form_back_action form_back_action_makeoreder" id="orderFormFinal">
                         <input class="input_makeOrder" type="text" placeholder="Ваше имя">
                         <input class="input_makeOrder" type="text" placeholder="Адрес">
                         <input class="input_makeOrder" type="tel" placeholder="Телефон">
-                        <button class="one_ringed_order_button_shop autor_form_button button_cansel_setting" onclick="loginFunc(this)">
+                        <button class="one_ringed_order_button_shop button_cansel_setting" onclick="loginFunc(this)">
                             <div class="ringed_order_button_in_first ringed_order_button_in_autor"></div>
                             <div class="ringed_order_button_in_title ringed_order_button_in_title_one_circle">
                                 <span>Заказать</span>
@@ -334,7 +373,9 @@
                     <div id="shpoingcartOreder"  class="makeOrderPage_Inner_Container_right">
                         <div class="dialog_composition_backdrop_cover">
                             <div class="dialog_composition_backdrop"></div>
-                          <div class="dialog_composition_backdrop_cover_in">  <button class="close_dialog button_cansel_setting" value="shpoingcart" onclick="closedialog(this)"><img src="/assets/x.svg"></button>
+                          <div class="dialog_composition_backdrop_cover_in">  
+                            <button class="close_dialog button_cansel_setting class900 showMoreButton"  onclick="showMore(this)"><img src="/assets/ugol.svg"></button>
+                            <button class="close_dialog button_cansel_setting class900Up" value="makeoreder" onclick="closedialog(this)"><img src="/assets/x.svg"></button>
                             <div class="dialog_composition_cover">
                                 <h3 class="title_dialog">Ваша корзина</h3>
                             <div class="dailog_composition_in">
@@ -342,11 +383,11 @@
                                     
                                 </div>
                                 <div class="order_container_in">
-                                    <div>
+                                    <div class="order_container_in_total_price">
                                         <span>Итого:</span>
                                         <span class="end_price_shop"></span>
                                     </div>
-                                    <button class="one_ringed_order_button_shop button_cansel_setting" onclick="buyItems(this)">
+                                    <button class="one_ringed_order_button_shop button_cansel_setting" onclick="buyItems(this)" form="orderFormFinal">
                                         <div class="ringed_order_button_in_first ringed_order_button_in_shop"></div>
                                         <div class="ringed_order_button_in_title ringed_order_button_in_title_one_circle">
                                             <span>Оформить</span>
@@ -365,9 +406,9 @@
         </dialog>
         </div>
       
-        <div class="main_categories" id="tocatalog">
+        <div class="main_categories slide_observe" id="tocatalog">
             <h1>категории</h1>
-            <div class="main_categories_cards_container">
+            <div class="main_categories_cards_container scroll-container" id="scrollContainer">
                 <div class="main_categories_card">
                     <h2 class="main_categories_card_title">напольные
                         <br>
@@ -499,13 +540,12 @@
             </div>
         </div>
     </section>
-
     </main>
    
     <footer>
-        <span>@2023</span>
+        <span class="yeardate">@2023</span>
         <a href="https://requestdesign.ru/testovoe-zadanie/front-end-verstalshchik-v-veb-studii"><img src="/assets/requestdesign.svg"></a>
-        <span>Все права защищены</span>
+        <span class="rightsInFooter">Все права защищены</span>
     </footer>
     <script src="/script.js"></script>
     <script src="/news.js"></script>
@@ -516,5 +556,33 @@
     <script src="/profile.js"></script>
     <script src="/search.js"></script>
     <script src="/contact.js"></script>
+    <script type="text/javascript">
+        // Функция ymaps.ready() будет вызвана, когда
+        // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
+        ymaps.ready(init);
+        function init(){
+            // Создание карты.
+            var myMap = new ymaps.Map("map", {
+                // Координаты центра карты.
+                // Порядок по умолчанию: «широта, долгота».
+                // Чтобы не определять координаты центра карты вручную,
+                // воспользуйтесь инструментом Определение координат.
+                center: [55.756756, 37.643408],
+                // Уровень масштабирования. Допустимые значения:
+                // от 0 (весь мир) до 19.
+                zoom: 15
+            });
+            var myGeoObject = new ymaps.Placemark([55.756756, 37.643408], {}, {
+                iconLayout: 'default#image',
+                iconImageClipRect: [[50,60], [50, 90]],
+                iconImageHref: '/assets/Yandex logo 1.svg',
+                iconImageSize: [70, 96],
+                iconImageOffset: [-70, -96]
+            });
+            
+            // Размещение геообъекта на карте.
+            myMap.geoObjects.add(myGeoObject); 
+        }
+    </script>
 </body>
 </html>
